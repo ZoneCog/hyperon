@@ -32,6 +32,10 @@ jobs:
         sudo apt-get install -y python3-pip
         pip3 install conan
 
+    - name: Create Conan Profile
+      run: |
+        conan profile detect
+
     - name: Install dependencies
       run: |
         sudo apt-get update
