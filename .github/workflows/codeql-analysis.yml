@@ -50,7 +50,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        conan install ../c # Pointing to the 'c' directory where conanfile.txt is located
+        conan install ../c --build=libcheck/0.15.2 # Build libcheck from source if necessary
         cmake .. -DCMAKE_BUILD_TYPE=Release
         make
 
