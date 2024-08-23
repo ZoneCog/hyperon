@@ -46,7 +46,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        conan install .. # Adjust this path if conanfile.txt is in a different directory
+        conan install ../project # Adjust this path to the correct location
         cmake .. -DCMAKE_BUILD_TYPE=Release
         make
 
