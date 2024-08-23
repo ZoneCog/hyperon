@@ -4,7 +4,6 @@ on:
   push:
     branches: [ "main" ]
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
     - cron: '0 2 * * 1'
@@ -22,15 +21,16 @@ jobs:
       fail-fast: false
       matrix:
         language: [ 'cpp' ]
-        # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install Conan
+    - name: Install Python and Conan
       run: |
-        pip install conan
+        sudo apt-get update
+        sudo apt-get install -y python3-pip
+        pip3 install conan
 
     - name: Install dependencies
       run: |
@@ -46,8 +46,8 @@ jobs:
       run: |
         mkdir build
         cd build
-        conan install .. # Run conan to install dependencies
-        cmake ..
+        conan install .. # Adjust this path if conanfile.txt is in a different directory
+        cmake .. -DCMAKE_BUILD_TYPE=Release
         make
 
     - name: Perform CodeQL Analysis
