@@ -1,4 +1,4 @@
-name: "CodeQL"
+name: "CodeQL Analysis"
 
 on:
   push:
@@ -28,20 +28,25 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Install Conan
+      run: |
+        pip install conan
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y check
+
     - name: Initialize the CodeQL tools
       uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
 
-    - name: Set up dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y cmake make gcc
-
     - name: Build the code
       run: |
         mkdir build
         cd build
+        conan install .. # Run conan to install dependencies
         cmake ..
         make
 
